@@ -1,0 +1,94 @@
+.hotel-container{
+    display: flex;
+    justify-content: center;
+    margin-top:50px;
+    margin-bottom: 20px;
+}
+.hotel-wrapper{
+    display: flex;
+    width: 100%;
+    max-width: 1024px;
+    flex-direction: column;
+    gap:25px;
+    position: relative;
+}
+.hotel-wrapper .hotel-title{
+    margin-bottom:-15px;
+}
+.book-hotel{
+    position: absolute;
+    top:55px;
+    right:0;
+    padding: 10px 25px 10px 25px;
+    background: #0071c2;
+    color:#fff;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.book-hotel:hover{
+    background: rgb(31, 117, 239);
+}
+.hotel-img-wrapper{
+    width: 33%;
+}
+.hotelImg{
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+.hotelImg:hover{
+    opacity: 0.7;
+}
+.hotel-images{
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   
+}
+.hotel-address span{
+  
+    padding-left:10px;
+}
+.hotel-address a {
+    text-decoration: none;
+
+}
+.hotel-address a:hover{
+    color:red;
+}
+.hotel-details{
+    display: flex;
+    margin-top:20px;
+    justify-content: space-between;
+    gap:15px;
+    
+}
+.hotel-detailsText{
+   flex:3;
+   margin-top:-20px;
+}
+.hotel-box{
+    flex:1;
+    border:none;
+    padding:20px;
+    background-color: rgb(155, 227, 243);
+    border-radius: 5px;
+}
+.hotel-box h3{
+    font-size: 1rem;
+}
+.hotel-box p{
+    margin-top:-10px;
+}
+.roomBooking{
+    padding-top:10px;
+    padding-bottom: 10px;
+    background: #0071c2;
+    color:#fff;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
