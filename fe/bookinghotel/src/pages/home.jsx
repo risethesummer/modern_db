@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Portal from "../layouts/portal";
 import { PaginationControl } from "react-bootstrap-pagination-control";
 import ScrollToTop from "./ScrollToTop";
+import url from './Url';
 
 export default function Home() {
   const [rooms, setRooms] = useState();
@@ -20,14 +21,14 @@ export default function Home() {
   useEffect(() => {
     if (addressRef.current) {
       fetch(
-        `https://spotty-cougars-greet.loca.lt/divisions?search=${addressRef.current}&offset=${page}`
+        `${url}/divisions?search=${addressRef.current}&offset=${page}`
       )
         .then((response) => response.json())
         .then((data) => setLocationJourney(data))
         .catch((error) => console.error(error));
     } else {
       fetch(
-        `https://spotty-cougars-greet.loca.lt/stays?&guests=${adultGuests}&guests=${childGuests}&checkTimes=${startDate.toISOString()}&checkTimes=${endDate.toISOString()}&offset=${page}`
+        `${url}/stays?&guests=${adultGuests}&guests=${childGuests}&checkTimes=${startDate.toISOString()}&checkTimes=${endDate.toISOString()}&offset=${page}`
       )
         .then((response) => response.json())
         .then((data) => setRooms(data))
@@ -42,14 +43,14 @@ export default function Home() {
     }
     if (addressRef.current) {
       fetch(
-        `https://spotty-cougars-greet.loca.lt/divisions?search=${addressRef.current}&page=${page}`
+        `${url}/divisions?search=${addressRef.current}&page=${page}`
       )
         .then((response) => response.json())
         .then((data) => setLocationJourney(data))
         .catch((error) => console.error(error));
     } else
       fetch(
-        `https://spotty-cougars-greet.loca.lt/stays?&guests=${adultGuests}&guests=${childGuests}&checkTimes=${startDate.toISOString()}&checkTimes=${endDate.toISOString()}`
+        `${url}/stays?&guests=${adultGuests}&guests=${childGuests}&checkTimes=${startDate.toISOString()}&checkTimes=${endDate.toISOString()}`
       )
         .then((response) => response.json())
         .then((data) => setRooms(data))
@@ -60,7 +61,7 @@ export default function Home() {
       let newState = [];
       locationJourney?.items.forEach((item) => {
         fetch(
-          `https://spotty-cougars-greet.loca.lt/stays?districtCode=${
+          `${url}/stays?districtCode=${
             item.districtCode
           }&provinceCode=${item.provinceCode}&wardCode=${
             item.wardCode

@@ -14,9 +14,10 @@ import { useLoaderData } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ScrollToTop from "../ScrollToTop";
 import Portal from "../../layouts/portal";
+import url from "../Url";
 export async function loader({ params }) {
   console.log(params.id, "id");
-  return fetch(`https://spotty-cougars-greet.loca.lt//stays/${params.id}`)
+  return fetch(`${url}/stays/${params.id}`)
     .then((response) => response.json())
     .catch((error) => console.error(error));
 }
