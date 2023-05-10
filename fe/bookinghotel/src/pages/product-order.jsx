@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import url from "./Url";
+import { Button, message, Space } from 'antd';
+import './product-order.css'
 export async function loader({ params }) {
   console.log(params.id, "id");
   return fetch(`${url}//stays/${params.id}`)
@@ -16,7 +18,7 @@ const numberWithCommas = (x) => {
 };
 export default function ProductOrder() {
   const [email, setEmail] = useState('');
-
+  const [messageApi, contextHolder] = message.useMessage();
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     localStorage.setItem('email', event.target.value);
@@ -32,8 +34,19 @@ export default function ProductOrder() {
 
   const navigate = useNavigate();
   
+  const success = () => {
+    messageApi.open({
+      type: 'success',
+      content: 'Đặt phòng thành công ',
+      className: 'custom-success-message',
+    });
+  };
   const  handleNavigate = () =>{
-    navigate(`/product-confirm/${data.id}`);
+    success();
+    setTimeout(() => {
+      navigate(`/product-confirm/${data.id}`);
+    }, 2000);
+    
   }
   const fromTime = dateStart.toLocaleTimeString("vi-VN", {
     hour12: false,
@@ -56,6 +69,7 @@ export default function ProductOrder() {
   return (
     <Portal>
     <ScrollToTop/>
+    {contextHolder}
       <div className="container product-order">
         <div className="md-stepper-horizontal d-flex justify-content-between align-items-center">
           <div className="md-step active done  follow-item d-flex align-items-center py-4 px-0">

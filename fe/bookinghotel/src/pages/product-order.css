@@ -1,0 +1,8 @@
+.custom-success-message .ant-message-custom-content {
+    font-size: 20px;
+   padding: 10px 25px 10px 25px;
+  }
+  
+  .custom-success-message .anticon {
+    font-size: 30px;
+  }

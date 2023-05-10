@@ -1,2 +1,2 @@
-const url = 'https://spotty-cougars-greet.loca.lt';
+const url = 'https://witty-pianos-obey.loca.lt';
 export  default url;
