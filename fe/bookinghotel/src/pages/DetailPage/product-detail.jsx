@@ -1,21 +1,35 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import photos from "./PhotoData";
-import "./Detaild.css";
+import './product-detail.css';
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { FaChild } from "react-icons/fa";
-import Popup from "../Popup";
+import Popup from "./Popup"
 import { FaBed } from "react-icons/fa";
 import { BiArrowToRight } from "react-icons/bi";
+import { useLoaderData } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ScrollToTop from "../ScrollToTop";
+import Portal from "../../layouts/portal";
+export async function loader({ params }) {
+  console.log(params.id, "id");
+  return fetch(`https://spotty-cougars-greet.loca.lt//stays/${params.id}`)
+    .then((response) => response.json())
+    .catch((error) => console.error(error));
+}
 
-
-const DetailHotel = ({ hotelId }) => {
-  const [hotelData, setHotelData] = useState(null);
+export default function ProductDetail() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
+  const [hotelData, setHotelData] = useState(null);
+  const data = useLoaderData();
+  const navigate = useNavigate();
+  const handleNavigate = () =>{
+    navigate(`/product-order/${data.id}`);
+  }
+  console.log("data : ", data);
   const handlePopupOpen = () => {
     setIsPopupOpen(true);
   };
@@ -23,27 +37,19 @@ const DetailHotel = ({ hotelId }) => {
   const handlePopupClose = () => {
     setIsPopupOpen(false);
   };
-  const url = `https://ninety-berries-admire.loca.lt/stays/${hotelId}`;
   useEffect(() => {
-    const fetchHotel = async () => {
-      try {
-        const response = await axios.get(url);
-        setHotelData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchHotel();
-  }, [hotelId]);
-
-  console.log(hotelData);
+    if (data) {
+      setHotelData(data);
+    }
+  }, [data]);
 
   if (!hotelData) {
     return <div>Loading...</div>;
   }
 
   return (
+    <Portal>
+    <ScrollToTop/>
     <div className="hotel-container">
       {/* {hotelData && (
         <div>
@@ -56,7 +62,7 @@ const DetailHotel = ({ hotelId }) => {
       )} */}
       {hotelData && (
         <div className="hotel-wrapper">
-          <button className="book-hotel">Đặt ngay</button>
+          <button className="book-hotel" onClick={() => handleNavigate()}>Đặt ngay</button>
           <h1 className="hotel-title" style={{ color: "#19A7CE" }}>
             {hotelData.name}
           </h1>
@@ -79,7 +85,7 @@ const DetailHotel = ({ hotelId }) => {
           <div className="hotel-details">
             <div className="hotel-detailsText">
               <h2 className="hotel-title">
-                Nghỉ ngơi ở Saphia Hotel Nha Trang
+                Nghỉ ngơi ở {hotelData.name} Hotel
               </h2>
               <p className="hotel-desc" style={{ marginTop: "30px" }}>
                 {hotelData.description}
@@ -106,7 +112,7 @@ const DetailHotel = ({ hotelId }) => {
               <p> Kiểu Á</p>
               <h3>Phòng có: </h3>
               <p>Nhìn ra biển</p>
-              <button className="roomBooking">Đặt ngay</button>
+              <button className="roomBooking" onClick={() => handleNavigate()}>Đặt ngay</button>
             </div>
           </div>
           <h1>Phòng ở khách sạn chúng tôi</h1>
@@ -230,7 +236,7 @@ const DetailHotel = ({ hotelId }) => {
                         <p>--{">"} Tối đa {room.maxAdultGuests} người lớn <AiOutlineUser/></p> 
                         <p>--{">"} Tối đa {room.maxAdultGuests} trẻ nhỏ <FaChild/></p> 
 
-                        <button>Đặt ngay</button>
+                        <button onClick={() => handleNavigate()}>Đặt ngay</button>
                     </div>
                   </div>
                 </Popup>
@@ -295,7 +301,8 @@ const DetailHotel = ({ hotelId }) => {
       <p>{hotelData.address}, {hotelData.wardName}, {hotelData.districtName}, {hotelData.provinceName}</p>
     </div> */}
     </div>
+    </Portal>
   );
 };
 
-export default DetailHotel;
+

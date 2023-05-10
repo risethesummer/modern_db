@@ -5,6 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import Portal from "../layouts/portal";
 import { PaginationControl } from "react-bootstrap-pagination-control";
+import ScrollToTop from "./ScrollToTop";
+
 export default function Home() {
   const [rooms, setRooms] = useState();
   const [adultGuests, setAdultGuests] = useState(2);
@@ -14,17 +16,18 @@ export default function Home() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [page, setPage] = useState(1);
+
   useEffect(() => {
     if (addressRef.current) {
       fetch(
-        `http://localhost:8080/divisions?search=${addressRef.current}&offset=${page}`
+        `https://spotty-cougars-greet.loca.lt/divisions?search=${addressRef.current}&offset=${page}`
       )
         .then((response) => response.json())
         .then((data) => setLocationJourney(data))
         .catch((error) => console.error(error));
     } else {
       fetch(
-        `http://localhost:8080/stays?&guests=${adultGuests}&guests=${childGuests}&checkTimes=${startDate.toISOString()}&checkTimes=${endDate.toISOString()}&offset=${page}`
+        `https://spotty-cougars-greet.loca.lt/stays?&guests=${adultGuests}&guests=${childGuests}&checkTimes=${startDate.toISOString()}&checkTimes=${endDate.toISOString()}&offset=${page}`
       )
         .then((response) => response.json())
         .then((data) => setRooms(data))
@@ -39,14 +42,14 @@ export default function Home() {
     }
     if (addressRef.current) {
       fetch(
-        `http://localhost:8080/divisions?search=${addressRef.current}&page=${page}`
+        `https://spotty-cougars-greet.loca.lt/divisions?search=${addressRef.current}&page=${page}`
       )
         .then((response) => response.json())
         .then((data) => setLocationJourney(data))
         .catch((error) => console.error(error));
     } else
       fetch(
-        `http://localhost:8080/stays?&guests=${adultGuests}&guests=${childGuests}&checkTimes=${startDate.toISOString()}&checkTimes=${endDate.toISOString()}`
+        `https://spotty-cougars-greet.loca.lt/stays?&guests=${adultGuests}&guests=${childGuests}&checkTimes=${startDate.toISOString()}&checkTimes=${endDate.toISOString()}`
       )
         .then((response) => response.json())
         .then((data) => setRooms(data))
@@ -57,7 +60,7 @@ export default function Home() {
       let newState = [];
       locationJourney?.items.forEach((item) => {
         fetch(
-          `http://localhost:8080/stays?districtCode=${
+          `https://spotty-cougars-greet.loca.lt/stays?districtCode=${
             item.districtCode
           }&provinceCode=${item.provinceCode}&wardCode=${
             item.wardCode
@@ -76,6 +79,7 @@ export default function Home() {
 
   return (
     <Portal>
+    <ScrollToTop/>
       <div
         id="errorInput"
         className="position-fixed top-0 translate-middle start-50 mt-5  toast align-items-center text-white bg-danger  border-0"
@@ -288,7 +292,7 @@ export default function Home() {
                     <div className="product-location-point">9,3</div>
                   </div>
                   <Link
-                    to={`/product-order/${item.id}`}
+                    to={`/product/${item.id}`}
                     className="mt-3 btn btn-primary"
                   >
                     Đặt ngay

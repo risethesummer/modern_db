@@ -1,9 +1,12 @@
 import Portal from "../layouts/portal";
 import { useLoaderData } from "react-router-dom";
 import { Toast } from "bootstrap/dist/js/bootstrap.esm.min.js";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop";
 export async function loader({ params }) {
   console.log(params.id, "id");
-  return fetch(`http://localhost:8080/stays/${params.id}`)
+  return fetch(`https://spotty-cougars-greet.loca.lt//stays/${params.id}`)
     .then((response) => response.json())
     .catch((error) => console.error(error));
 }
@@ -11,13 +14,26 @@ const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 export default function ProductOrder() {
+  const [email, setEmail] = useState('');
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    localStorage.setItem('email', event.target.value);
+  };
+  
   const data = useLoaderData();
   let dateStart = new Date(data.rooms[0].reservedTimes[0].from);
   let options = { day: "numeric", month: "long", year: "numeric" };
-  const fromDate = `T${dateStart.getDate()}, ${dateStart.toLocaleDateString(
+  const fromDate = `${dateStart.getDate()}h, ${dateStart.toLocaleDateString(
     "vi-VN",
     options
   )}`;
+
+  const navigate = useNavigate();
+  
+  const  handleNavigate = () =>{
+    navigate(`/product-confirm/${data.id}`);
+  }
   const fromTime = dateStart.toLocaleTimeString("vi-VN", {
     hour12: false,
     hour: "2-digit",
@@ -25,7 +41,7 @@ export default function ProductOrder() {
   });
   const dateEnd = new Date(data.rooms[0].reservedTimes[0].to);
   options = { day: "numeric", month: "long", year: "numeric" };
-  const toDate = `T${dateEnd.getDate()}, ${dateEnd.toLocaleDateString(
+  const toDate = `${dateEnd.getDate()}h, ${dateEnd.toLocaleDateString(
     "vi-VN",
     options
   )}`;
@@ -38,6 +54,7 @@ export default function ProductOrder() {
 
   return (
     <Portal>
+    <ScrollToTop/>
       <div className="container product-order">
         <div className="md-stepper-horizontal d-flex justify-content-between align-items-center">
           <div className="md-step active done  follow-item d-flex align-items-center py-4 px-0">
@@ -248,7 +265,8 @@ export default function ProductOrder() {
 
                 <div className="mt-3 w-50">
                   <label className="form-label fw-bolder">Địa chỉ email</label>
-                  <input className="form-control" placeholder="Nhập email..." />
+                  <input className="form-control" placeholder="Nhập email..."  value={email}
+        onChange={handleEmailChange}/>
                 </div>
 
                 <div className="mt-3">
@@ -356,10 +374,12 @@ export default function ProductOrder() {
           <button
             className="btn btn-primary"
             type="button"
-            onClick={() => {
-              const toast = new Toast(document.getElementById("success"));
-              toast.show();
-            }}
+            // onClick={() => {
+            //   const toast = new Toast(document.getElementById("success"));
+            //   toast.show();
+            //}}
+            onClick = {() => handleNavigate()}
+            
           >
             Đặt phòng
           </button>

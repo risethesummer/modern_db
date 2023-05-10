@@ -6,7 +6,7 @@ export default function Header() {
       <nav className="container navbar navbar-expand-lg navbar-light">
         <div className="container-fluid justify-content-between">
           <Link to={'/'} className="navbar-brand" href="#" style={{fontSize: 22, fontWeight: 'bold'}}>
-            Booking.com
+            19HTTT2
           </Link>
           <button
             className="navbar-toggler"

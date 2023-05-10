@@ -1,0 +1,53 @@
+.confirm-container {
+  display: flex;
+
+  gap: 6px;
+}
+.confirm-container .info {
+  border: 1px solid rgb(156, 152, 152);
+
+  padding: 10px;
+  border-radius: 8px;
+  flex: 1;
+}
+.confirm-container .info:nth-of-type(2) {
+  flex: 3;
+}
+.confirm-container .info:nth-of-type(3) {
+  flex: 2;
+}
+
+.wordBlue {
+  color: #0071c2;
+  font-weight: bold;
+  cursor: pointer;
+}
+.wordBold {
+  font-weight: bold;
+  cursor: pointer;
+}
+.checkingFinal-booking {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .checkingFinal-booking .alertBeforeCancel {
+    flex: 2;
+  }
+  .checkingFinal-booking .bnt-cancel {
+    flex: 3;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .checkingFinal-booking .bnt-cancel button{
+    height:60px;
+    padding:17px;
+    border-radius: 8px;
+    background-color: #0071c2;
+    color: #fff;
+    border: 1px solid silver;
+    cursor: pointer;
+  }
+  .checkingFinal-booking .bnt-cancel button:hover{
+    opacity: 0.6;
+  }
